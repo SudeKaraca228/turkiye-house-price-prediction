@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye House Price Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fa-solid fa-home"></i> EstateEstimate</h1>
+            <p>AI-Powered House Price Prediction Model</p>
+        </div>
+
+        <form id="predictionForm">
+            <div class="form-section">
+                <h3><i class="fa-solid fa-map-pin"></i> Location & Basics</h3>
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label for="city">City (Şehir)</label>
+                        <select id="city" name="Şehir" required>
+                            <option value="">Select City</option>
+                            <option value="istanbul">İstanbul</option>
+                            <option value="ankara">Ankara</option>
+                            <option value="izmir">İzmir</option>
+                            <option value="adana">Adana</option>
+                            <option value="konya">Konya</option>
+                            </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="net_sqm">Net Area (m²) (Net_Metrekare)</label>
+                        <input type="number" id="net_sqm" name="Net_Metrekare" placeholder="e.g. 100" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3><i class="fa-solid fa-layer-group"></i> Property Features</h3>
+                <div class="grid-3">
+                    <div class="input-group">
+                        <label for="rooms">Rooms (Oda_Sayısı)</label>
+                        <input type="number" id="rooms" name="Oda_Sayısı" placeholder="e.g. 4.0" step="0.5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="bathrooms">Bathrooms (Banyo_Sayısı)</label>
+                        <input type="number" id="bathrooms" name="Banyo_Sayısı" placeholder="e.g. 1" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="heating">Heating (Isıtma_Tipi)</label>
+                        <select id="heating" name="Isıtma_Tipi">
+                            <option value="Kombi Doğalgaz">Kombi Doğalgaz</option>
+                            <option value="Merkezi">Merkezi</option>
+                            <option value="Klimalı">Klimalı</option>
+                            <option value="Yerden Isıtma">Yerden Isıtma</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3><i class="fa-solid fa-building"></i> Building Details</h3>
+                <div class="grid-3">
+                    <div class="input-group">
+                        <label for="floor">Floor (Bulunduğu_Kat)</label>
+                        <input type="text" id="floor" name="Bulunduğu_Kat" placeholder="e.g. 3.Kat">
+                    </div>
+                    <div class="input-group">
+                        <label for="total_floors">Total Floors (Binanın_Kat_Sayısı)</label>
+                        <input type="number" id="total_floors" name="Binanın_Kat_Sayısı" placeholder="e.g. 10">
+                    </div>
+                    <div class="input-group">
+                        <label for="age">Building Age (Binanın_Yaşı)</label>
+                        <input type="number" id="age" name="Binanın_Yaşı" placeholder="e.g. 5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3><i class="fa-solid fa-list-check"></i> Additional Details</h3>
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label for="usage">Usage Status (Kullanım_Durumu)</label>
+                        <select id="usage" name="Kullanım_Durumu">
+                            <option value="Boş">Boş (Empty)</option>
+                            <option value="Kiracılı">Kiracılı (Tenant)</option>
+                            <option value="Mülk Sahibi">Mülk Sahibi (Owner)</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-group">
+                         <label><input type="checkbox" name="Eşya_Durumu" value="1"> Furnished (Eşya Durumu)</label>
+                         <label><input type="checkbox" name="Yatırıma_Uygunluk" value="1"> Investment Suitable</label>
+                         <label><input type="checkbox" name="Takas" value="1"> Swap Available (Takas)</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" id="predictBtn">Estimate Price</button>
+        </form>
+
+        <div id="resultArea" class="hidden">
+            <h2>Estimated Price:</h2>
+            <h1 id="priceText">₺ 0.00</h1>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
