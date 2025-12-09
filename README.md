@@ -5,28 +5,28 @@ This is a pair-programming project that includes EDA, modeling, backend, and fro
 turkiye-house-price-prediction
 │
 ├── data/
-│   ├── raw/                
-│   ├── processed/         
+│   ├── raw/
+│   └── processed/
 │
 ├── notebooks/
-│   ├── Cleaning.ipynb
-│   ├── EDA.ipynb           
-│   └── Modeling.ipynb      
+│   ├── EDA.ipynb                    
+│   ├── Cleaning.ipynb                
+│   ├── catboost_and_randomforest.ipynb  
+│   └── xgboost_linearregression.ipynb   
 │
-├── model/
-│   ├── best_model.pkl      
-│   └── scaler.pkl          
+├── model/               
+│   └── best_model.pkl                   
 │
 ├── backend/
-│   ├── main.py             
-│   ├── requirements.txt    
-│   ├── schemas.py          
-│   └── utils.py            
+│   ├── main.py                     
+│   ├── requirements.txt            
+│   ├── schemas.py                   
+│   └── utils.py                     
 │
 ├── frontend/
-│   ├── index.html          
-│   ├── style.css           
-│   └── script.js           
+│   ├── index.html                    
+│   ├── style.css
+│   └── script.js
 │
 ├── .gitignore
 └── README.md               
