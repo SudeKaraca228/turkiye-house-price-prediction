@@ -39,6 +39,6 @@ uvicorn main:app --reload
 ```
 and open index.html using a Live Server extension to run the frontend.
 
-**Live Demo:** https://your-deployed-project-url.com
+**Live Demo:** https://turkiyehousepriceprediction.netlify.app
 
 
