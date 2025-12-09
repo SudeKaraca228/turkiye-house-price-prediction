@@ -135,14 +135,14 @@
                         </select>
                     </div>
                     <div class="checkbox-group">
-                         <label><input type="checkbox" name="Eşya_Durumu" value="1"> Furnished (Eşya Durumu)</label>
-                         <label><input type="checkbox" name="Yatırıma_Uygunluk" value="1"> Investment Suitable</label>
-                         <label><input type="checkbox" name="Takas" value="1"> Swap Available (Takas)</label>
+                        <label><input type="checkbox" id="furnished" name="Eşya_Durumu" value="1"> Furnished (Eşya Durumu)</label>
+                        <label><input type="checkbox" id="investment" name="Yatırıma_Uygunluk" value="1"> Investment Suitable</label>
+                        <label><input type="checkbox" id="swap" name="Takas" value="1"> Swap Available (Takas)</label>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" id="predictBtn">Estimate Price</button>
+            <button type="button" onclick="submitForm()" id="predictBtn">Estimate Price</button>
         </form>
 
         <div id="resultArea" class="hidden">
