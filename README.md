@@ -36,7 +36,9 @@ turkiye-house-price-prediction
 ##Data Processing & Engineering
 
 **Smart Imputation:**Instead of basic mean filling, we used IterativeImputer (via Random Forest) to model and predict missing values accurately.
+
 **Outlier Handling:** We filtered for realistic ranges (Price: 1M-20M ₺, Net Area: 50-500 square meters) and applied a Log Transformation to the target variable to normalize the data.
+
 **Feature Selection:** Dropped Gross Area due to high correlation (0.89) with Net Area  and removed Title Deed Status due to >50% missing data.
 
 ## Key Findings & Results
@@ -50,6 +52,7 @@ turkiye-house-price-prediction
 ```
 
 **Best Model:** CatBoost achieved the best balance of accuracy and generalization (RMSE: 0.29, R2: 0.68).
+
 **Top Predictors:** The primary drivers of price were Net Area (0.54 correlation), Bathroom Count (0.53), and Room Count (0.50)
 
 ## How to Run the Project
