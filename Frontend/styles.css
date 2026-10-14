@@ -109,3 +109,9 @@ button#predictBtn:hover {
 @media (max-width: 600px) {
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
 }
+* { box-sizing: border-box; }
+.form-section h2 { font-size: 1.1rem; color: var(--primary-color); }
+.notice { font-size: 0.9rem; line-height: 1.5; color: #555; }
+#status { color: #a32620; line-height: 1.5; }
+#priceText { font-size: 2rem; font-weight: bold; }
+button#predictBtn:disabled { opacity: 0.65; cursor: wait; }

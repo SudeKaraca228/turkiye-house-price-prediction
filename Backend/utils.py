@@ -1,28 +1,20 @@
-import pandas as pd
+"""Convert the public request to the model's feature contract."""
 import pickle
-def prepare_features(data):
-    features = {
-        "Şehir": [data.city],
-        "Net_Metrekare": [data.net_area],
-        "Oda_Sayısı": [data.rooms],
-        "Banyo_Sayısı": [data.bathrooms],
-        "Isıtma_Tipi": [data.heating],
-        "Bulunduğu_Kat": [data.floor],
-        "Binanın_Kat_Sayısı": [data.total_floors],
-        "Binanın_Yaşı": [data.building_age],
-        "Kullanım_Durumu": [data.usage_status],
-        "Eşya_Durumu": [int(data.furnished)],
-        "Yatırıma_Uygunluk": [int(data.investment_suitable)],
-        "Takas": [int(data.swap_available)]
-    }
-    
-    df = pd.DataFrame(features)
+import pandas as pd
+from Backend.features import FEATURES, age_group
 
-    expected_order = ['Net_Metrekare', 'Oda_Sayısı', 'Bulunduğu_Kat', 'Binanın_Yaşı', 'Isıtma_Tipi', 'Şehir', 'Binanın_Kat_Sayısı', 'Kullanım_Durumu', 'Banyo_Sayısı']
-    df = df[expected_order]
-    
-    return df
+
+def prepare_features(data):
+    return pd.DataFrame([{
+        'Net_Metrekare': data.net_area, 'Oda_Sayısı': data.rooms,
+        'Bulunduğu_Kat': data.floor, 'Binanın_Yaşı': age_group(data.building_age),
+        'Isıtma_Tipi': data.heating, 'Şehir': data.city,
+        'Binanın_Kat_Sayısı': data.total_floors,
+        'Kullanım_Durumu': data.usage_status, 'Banyo_Sayısı': data.bathrooms,
+    }], columns=FEATURES)
+
+
 def load_model(model_path):
+    # Only the artifact shipped with this repository is loaded.
     with open(model_path, 'rb') as file:
-        model = pickle.load(file)
-    return model
+        return pickle.load(file)

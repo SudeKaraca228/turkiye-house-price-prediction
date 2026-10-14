@@ -1,66 +1,80 @@
-# turkiye-house-price-prediction
-This is a pair-programming project that includes EDA, modeling, backend, and frontend , resulting in an end-to-end machine learning application that predicts house prices in Türkiye.
-## Folder Structure 
-```bash
-turkiye-house-price-prediction
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── notebooks/
-│   ├── EDA.ipynb                    
-│   ├── Cleaning.ipynb                
-│   ├── catboost_and_randomforest.ipynb  
-│   └── xgboost_linearregression.ipynb   
-│
-├── model/               
-│   └── best_model.pkl                   
-│
-├── backend/
-│   ├── main.py                     
-│   ├── requirements.txt            
-│   ├── schemas.py                   
-│   └── utils.py                     
-│
-├── frontend/
-│   ├── index.html                    
-│   ├── style.css
-│   └── script.js
-│
-├── .gitignore
-└── README.md               
-```
+# Türkiye House Price Prediction
 
+An end-to-end machine learning project that estimates house prices in Türkiye from nine property features. It includes data preparation, exploratory analysis, model comparison, a FastAPI backend, and a responsive HTML/CSS/JavaScript frontend.
 
-##Data Processing & Engineering
+ **Live Demo:** **[house-prices-predictor-ml.vercel.app](https://house-prices-predictor-ml.vercel.app/)**
 
-**Smart Imputation:**Instead of basic mean filling, we used IterativeImputer (via Random Forest) to model and predict missing values accurately.
+## Algorithms Explored
 
-**Outlier Handling:** We filtered for realistic ranges (Price: 1M-20M ₺, Net Area: 50-500 square meters) and applied a Log Transformation to the target variable to normalize the data.
+- Linear Regression
+- Random Forest
+- XGBoost — selected for the API using validation error
+- CatBoost
 
-**Feature Selection:** Dropped Gross Area due to high correlation (0.89) with Net Area  and removed Title Deed Status due to >50% missing data.
+## Dataset and Processing
 
-## Key Findings & Results
-```
-| Model               | RMSE | MAE  | R2 Score | Train R2 |
-|---------------------|------|------|----------|----------|
-| Linear Regression   | 0.35 | 0.25 | 0.57     | -        |
-| XGBoost (Baseline)  | 0.30 | 0.215| 0.66     | 0.84     |
-| XGBoost (Tuned)     | -    | 0.26 | 0.69     | 0.78     |
-| CatBoost (Final)    | 0.29 | 0.21 | 0.68     | 74.31    |
-```
+The raw file contains **20,326 records across 53 cities**. Removing duplicates and applying fixed property/price bounds leaves **17,292 records**. The model uses net area, rooms, floor, age group, heating, city, total floors, occupancy, and bathrooms.
 
-**Best Model:** CatBoost achieved the best balance of accuracy and generalization (RMSE: 0.29, R2: 0.68).
+Prices use `log1p` during training and `expm1` for predictions. Numeric medians and heating-category grouping are fitted inside each model's pipeline. Identical feature profiles stay in the same split to avoid train/test overlap.
 
-**Top Predictors:** The primary drivers of price were Net Area (0.54 correlation), Bathroom Count (0.53), and Room Count (0.50)
+## Results
 
-## How to Run the Project
+All models use the same held-out test set of 3,455 records. Selection uses a separate validation set; the saved model is fitted on training plus validation data.
+
+| Model | Log RMSE | Log R² | MAE (TRY) |
+| --- | ---: | ---: | ---: |
+| Linear Regression | 0.324 | 0.615 | 806,299 |
+| Random Forest | 0.312 | 0.644 | 767,432 |
+| XGBoost | 0.300 | 0.671 | 742,473 |
+| CatBoost | 0.303 | 0.664 | 745,324 |
+
+See the [six-page technical report](technical-report.pdf) and [machine-readable results](Model/metrics.json).
+
+## Run Locally
+
+Backend + frontend run together from one FastAPI entrypoint (`app.py`). The browser uses relative `/options` and `/predict` calls.
+
+**Prerequisites:** Python 3.12, `Model/best_model.pkl` present (already committed).
 
 ```bash
+# 1. Clone and enter the repo
+git clone <your-repo-url>
+cd house_prices_predictor_ML
+
+# 2. Create and activate a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+# Windows: .venv\Scripts\activate
+
+# 3. Install dependencies
 pip install -r requirements.txt
-uvicorn main:app --reload
-```
-and open index.html using a Live Server extension to run the frontend.
 
-**Live Demo:** https://turkiyehousepriceprediction.netlify.app
+# 4. Start the app
+uvicorn app:app --reload
+```
+
+Open in your browser:
+
+- App: `http://127.0.0.1:8000/`
+
+
+**macOS (Apple Silicon) note:** XGBoost needs OpenMP. If import fails, run:
+
+```bash
+brew install libomp
+export DYLD_LIBRARY_PATH="$VIRTUAL_ENV/lib/python3.12/site-packages/sklearn/.dylibs${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
+```
+
+
+## Directory Structure
+
+```text
+├── app.py              
+├── Backend/             
+├── Frontend/          
+├── Model/              
+├── data/               
+├── training/           
+├── notebooks/       
+└── technical-report.pdf 
+```
